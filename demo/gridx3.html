@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Grid</title>
+    <link rel="stylesheet" type="text/css" href="../lib/grid.min.css"/>
+    <style type="text/css">
+        body{margin:10px; background: #fff; font-size: 12px}
+        h2{margin:0; font-size: 12px; height:20px; overflow: hidden;}
+    </style>
+    <script type="text/javascript" src="jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../lib/grid.min.js"></script>
+    <!--Demo数据js-->
+    <script type="text/javascript" src="data.js"></script>
+</head>
+<body>
+<span id="result">回调结果：</span>
+<br /><br />
+<button onclick="delandselect()">第4行后增加3行并选中</button>
+<button onclick="remove1()">删除第6, 9行</button>
+<button onclick="getselect()">获取选中行索引号(从0开始)</button>
+<button onclick="select()">选中第1,2,40行</button>
+<button onclick="hightlight()">第4行高亮</button>
+<button onclick="change()">改变第1行数据</button>
+<br /><br />
+<div>
+    <table id="grid">
+        <thead>
+        <tr>
+            <th style="width:40px"></th>
+            <th colStyle="text-align: center" bindName="1" style="width:40px">#</th>
+            <th colStyle="text-align: center;" bindName="info.name" render="a" options="{'url':'#'}">姓名</th>
+            <th colStyle="text-align: center" bindName="chinese">语文</th>
+            <th colStyle="text-align: center" bindName="english">英语</th>
+            <th colStyle="text-align: center" bindName="politics">政治</th>
+            <th colStyle="text-align: center" bindName="history">历史</th>
+            <th colStyle="text-align: center" bindName="geography">地理</th>
+            <th colStyle="text-align: center" bindName="math">数学</th>
+            <th colStyle="text-align: center" bindName="physics">物理</th>
+            <th colStyle="text-align: center" bindName="organisms">生物</th>
+            <th colStyle="text-align: center" bindName="chemistry">化学</th>
+            <th colStyle="text-align: center" bindName="pass" render="image" options="imgoptions">是否毕业</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<script type="text/javascript">
+    //回调
+    var result = document.getElementById("result");
+
+    function initData (gridObj, query) {
+        var pageNo = query.pageNo,
+            recordSize = query.recordSize;
+        gridObj.setDatasource(data.slice(recordSize * (pageNo - 1), recordSize * pageNo), 1500);
+    }
+
+    var imgoptions = {
+        'compare' : {'1':'yes.gif', '0' : 'no.gif'},
+        'title' : {'1':'设为未毕业', '0' : '设为已毕业'},
+        'click' : 'changeData',
+        'className' : 'click'
+    };
+    grid = $("#grid").grid({
+        datasource: initData,
+        colWidthChange: true,
+        colHidden: true,
+        colMove: true,
+        gridWidth: 800,
+        removeDataCallback: removeCallback,
+        addDataCallback: addCallback,
+        rowClickCallback: clickCallback,
+        loadCompleteCallback: loadCallback,
+        selectAllCallback: selectCallback
+    });
+    function changeData (a) {
+        a.pass = a.pass === 1 ? 0 : 1;
+        grid.changeData(a);
+    }
+    function addCallback() {
+        result.innerHTML = "增加成功！";
+    }
+    function removeCallback() {
+        result.innerHTML = "删除成功！";
+    }
+    function clickCallback(data, checked, index) {
+        index ++;
+        result.innerHTML = "单击" + (checked ? "选中" : "取消") + "第" + index + "行！";
+    }
+    function loadCallback(data, checked, index) {
+        result.innerHTML = "数据加载完毕！";
+    }
+    function selectCallback() {
+        result.innerHTML = "全选成功！";
+    }
+
+    //方法
+    function delandselect() {//第4行后增加3行并选中
+        grid.addData(data.splice(80, 3), 4);
+        grid.selectRowsByIndex([4, 5, 6])
+    }
+    function remove1() {//删除第6, 9行
+        grid.removeData([5, 8])
+    }
+    function getselect() {//获取选中行索引号(从0开始)
+        alert(grid.getSelectedIndex());
+    }
+    function select() {//选中第1,2,40行
+        grid.selectRowsByIndex([0, 1, 39]);
+    }
+    function hightlight() {//第4行高亮
+        grid.setHighLight(3);
+    }
+    function change() {//改变第1行数据
+        var newData = {
+            "ID":0,
+            "info":{"name":"临时工"},
+            "chinese":99,
+            "english":99,
+            "politics":99,
+            "history":99,
+            "geography":99,
+            "math":99,
+            "physics":99,
+            "organisms":99,
+            "chemistry":99,
+            "pass":0
+            };
+        grid.changeData(newData);
+    }
+</script>
+</body>
+</html>

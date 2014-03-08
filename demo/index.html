@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>demo</title>
+    <base target="ifm"/>
+    <style type="text/css">
+        html, body{margin: 0; height: 100%; overflow: hidden; font-size: 12px;}
+        a{text-decoration: none; color: #333; line-height: 28px;}
+        .checked, a:hover{color: red;}
+        ul{padding: 0; margin: 0;}
+        li{border-bottom: 1px solid #ddd; padding-left: 1em; list-style: inside}
+        .left { background: #eee; position: absolute; width: 180px;height:100%; left:0; top:0; overflow: auto;}
+        .main{position: relative; padding-left: 180px; height: 100%;}
+        iframe{height: 100%; width: 100%;}
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="left">
+        <h2>&nbsp;Grid例子</h2>
+        <ul class="grid">
+            <li><a href="grid_simple.html" class="checked">简单数据表格</a></li>
+            <li><a href="grid_adaptive.html">列宽不自适应</a></li>
+            <li><a href="grid_auto.html">组件全屏自适应</a></li>
+            <li><a href="grid_colmove.html">列顺序拖曳</a></li>
+            <li><a href="grid_colrender.html">内容和样式渲染</a></li>
+            <li><a href="grid_ellipsis.html">内容换行支持</a></li>
+            <li><a href="grid_fixed.html">固定列</a></li>
+            <li><a href="grid_format.html">格式化金钱和时间</a></li>
+            <li><a href="grid_multith.html">多行表头</a></li>
+            <li><a href="grid_num.html">组件自带序号列</a></li>
+            <li><a href="grid_persistence.html">持久化</a></li>
+            <li><a href="grid_pk.html">主键操作</a></li>
+            <li><a href="grid_single.html">单选</a></li>
+            <li><a href="grid_sort.html">排序操作</a></li>
+            <li><a href="grid_titlerander.html">提示(title属性)渲染</a></li>
+            <li><a href="gridx3.html">常用方法和回调</a></li>
+            <li><a href="gridx.html">综合示例一</a></li>
+            <li><a href="gridx2.html">综合示例二</a></li>
+        </ul>
+    </div>
+    <iframe src="grid_single.html" frameborder="0" name="ifm"></iframe>
+    <script src="jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script>
+        var a = $("a"),
+            curr = a.eq(0) ;
+        a.click(function () {
+            if (curr) {
+                curr.removeClass("checked");
+            }
+            curr = $(this).addClass("checked");
+        })
+    </script>
+</div>
+</body>
+</html>

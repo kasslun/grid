@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Grid</title>
+    <link rel="stylesheet" type="text/css" href="../lib/grid.min.css"/>
+    <style type="text/css">
+        body{margin:10px; background: #fff;}
+        h2{margin:0; font-size: 12px; height:20px; overflow: hidden;}
+    </style>
+    <script type="text/javascript" src="jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../lib/grid.min.js"></script>
+    <!--Demo数据js-->
+    <script type="text/javascript" src="data.js"></script>
+</head>
+<body>
+<div>
+    <table id="grid1">
+        <thead>
+        <tr>
+            <th></th>
+            <th colStyle="text-align: center" bindName="1">#</th>
+            <th colStyle="text-align: center;" bindName="info.name" render="a" options="{'url':'#'}">姓名</th>
+            <th colStyle="text-align: center" bindName="info.class">班级</th>
+            <th colStyle="text-align: center" bindName="info.age" hide="true">年龄</th>
+            <th colStyle="text-align: center;" bindName="time" format="yyyy年MM月dd日">考试时间</th>
+            <th colStyle="text-align: center" bindName="chinese" sort="true">语文</th>
+            <th colStyle="text-align: center" bindName="english" sort="true">英语</th>
+            <th colStyle="text-align: center" bindName="politics" sort="true">政治</th>
+            <th colStyle="text-align: center" bindName="history" sort="true">历史</th>
+            <th colStyle="text-align: center" bindName="geography" sort="true">地理</th>
+            <th colStyle="text-align: center" bindName="math" sort="true">数学</th>
+            <th colStyle="text-align: center" bindName="physics" sort="true">物理</th>
+            <th colStyle="text-align: center" bindName="organisms" sort="true">生物</th>
+            <th colStyle="text-align: center" bindName="chemistry" sort="true">化学</th>
+            <th colStyle="text-align: center" bindName="money" format="money">考试费用</th>
+            <th colStyle="text-align: center" bindName="pass" render="image" options="imgoptions">是否毕业</th>
+            <th colStyle="text-align: center" render="button" options="buttonoptions">删除记录</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<script type="text/javascript">
+    function sort (bindName, sortType) {
+        data.sort(function (a, b) {
+            if (sortType === "ASC") {
+                return a[bindName] - b[bindName];
+            }
+            return b[bindName] - a[bindName];
+        })
+    }
+    function initData (gridObj, query) {
+        var pageNo = query.pageNo,
+                recordSize = query.recordSize,
+                sortName = query.sortName,
+                sortType = query.sortType;
+        if (sortName[0]) {
+            sort(sortName[0], sortType[0]);
+        }
+        gridObj.setDatasource(data.slice(recordSize * (pageNo - 1), recordSize * pageNo), 1500);
+    }
+    function getBodyWidth () {
+        return (document.documentElement.clientWidth || document.body.clientWidth) - 20;
+    }
+    function getBodyHeight () {
+        return (document.documentElement.clientHeight || document.body.clientHeight) - 25;
+    }
+    function goodAndBad (rowData, bindName) {
+        var value = rowData[bindName];
+        if (bindName !== "age" && bindName !== "pass" && typeof value === "number") {
+            if (value === 0) {
+                return "background:#e5bbff;";
+            }
+        }
+    }
+    function changeData (a) {
+        a.pass = a.pass === 1 ? 0 : 1;
+        grid_obj.changeData(a);
+    }
+    function removeData (a, b) {
+        grid_obj.removeData([b]);
+    }
+    var imgoptions = {
+        'compare' : {'1':'yes.gif', '0' : 'no.gif'},
+        'title' : {'1':'设为未毕业', '0' : '设为已毕业'},
+        'click' : 'changeData',
+        'className' : 'click'
+    };
+    var buttonoptions = {'value' : '删除', 'click' : removeData};
+
+    var grid_obj = $("#grid1").grid({
+        datasource : initData,
+        gridHeight: "800px",
+        tableWidth : "2500px",
+        selectType : "single",
+        wrap : true,
+        headerWrap : false,
+        colWidthChange: true,
+        colMove: true,
+        resizeWidth : getBodyWidth,
+        resizeHeight : getBodyHeight,
+        colStyleRender:goodAndBad,
+        oddEvenRow : true
+    });
+</script>
+</body>
+</html>

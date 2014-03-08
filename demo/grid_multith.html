@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Grid</title>
+    <link rel="stylesheet" type="text/css" href="../lib/grid.min.css"/>
+    <style type="text/css">
+        body{margin:10px; background: #fff;}
+        h2{margin:0; font-size: 12px; height:20px; overflow: hidden;}
+    </style>
+    <script type="text/javascript" src="jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../lib/grid.min.js"></script>
+    <!--Demo数据js-->
+    <script type="text/javascript" src="data.js"></script>
+</head>
+<body>
+<div>
+    <table id="grid">
+        <thead>
+        <tr>
+            <th rowspan="3" style="width:60px"></th>
+            <th rowspan="2" colspan="2">学生信息</th>
+            <th colspan="9">考试成绩</th>
+        </tr>
+        <tr>
+            <th colspan="5">文科</th>
+            <th colspan="4">理科</th>
+        </tr>
+        <tr>
+            <th colStyle="text-align: center;" bindName="info.name" render="a" options="{'url':'#'}">姓名</th>
+            <th colStyle="text-align: center" bindName="info.class">班级</th>
+            <th colStyle="text-align: center" bindName="chinese" sort="true">语文</th>
+            <th colStyle="text-align: center" bindName="english" sort="true">英语</th>
+            <th colStyle="text-align: center" bindName="politics" sort="true">政治</th>
+            <th colStyle="text-align: center" bindName="history" sort="true">历史</th>
+            <th colStyle="text-align: center" bindName="geography" sort="true">地理</th>
+            <th colStyle="text-align: center" bindName="math" sort="true">数学</th>
+            <th colStyle="text-align: center" bindName="physics" sort="true">物理</th>
+            <th colStyle="text-align: center" bindName="organisms" sort="true">生物</th>
+            <th colStyle="text-align: center" bindName="chemistry" sort="true">化学</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<script type="text/javascript">
+    function initData (gridObj, query) {
+        var pageNo = query.pageNo,
+                recordSize = query.recordSize;
+        gridObj.setDatasource(data.slice(recordSize * (pageNo - 1), recordSize * pageNo), 1500);
+    }
+    $("#grid").grid({
+        datasource: initData,
+        colWidthChange: true,
+        colHidden: true,
+        gridWidth: 800
+    })
+</script>
+</body>
+</html>

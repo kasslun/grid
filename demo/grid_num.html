@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Grid</title>
+    <link rel="stylesheet" type="text/css" href="../lib/grid.min.css"/>
+    <style type="text/css">
+        body{margin:10px; background: #fff;}
+        h2{margin:0; font-size: 12px; height:20px; overflow: hidden;}
+    </style>
+    <script type="text/javascript" src="jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../lib/grid.min.js"></script>
+    <!--Demo数据js-->
+    <script type="text/javascript" src="data.js"></script>
+</head>
+<body>
+<div>
+    <table id="grid">
+        <thead>
+        <tr>
+            <th></th>
+            <th colStyle="text-align: center" bindName="1">自动序号</th>
+            <th bindName="info.name" render="a" options="{'url':'#'}">姓名</th>
+            <th bindName="chinese">语文</th>
+            <th bindName="english">英语</th>
+            <th bindName="politics">政治</th>
+            <th bindName="history">历史</th>
+            <th bindName="geography">地理</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<script type="text/javascript">
+    function initData (gridObj, query) {
+        var pageNo = query.pageNo,
+                recordSize = query.recordSize;
+        gridObj.setDatasource(data.slice(recordSize * (pageNo - 1), recordSize * pageNo), 1500);
+    }
+    $("#grid").grid({
+        datasource: initData,
+        colWidthChange: true,
+        colHidden: true,
+        gridWidth: 800
+    })
+</script>
+</body>
+</html>

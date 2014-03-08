@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Grid</title>
+    <link rel="stylesheet" type="text/css" href="../lib/grid.min.css"/>
+    <style type="text/css">
+        body{margin:10px; background: #fff; font-size: 12px;}
+        h2{margin:0; font-size: 12px; height:20px; overflow: hidden;}
+    </style>
+    <script type="text/javascript" src="jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../lib/grid.min.js"></script>
+    <!--Demo数据js-->
+    <script type="text/javascript" src="data.js"></script>
+</head>
+<body>
+<div>
+    本页设置，最大同时3列排序。且有5个列支持排序 <button onclick="getSrotStatus()">获取排序当前状态</button>
+    <table id="grid">
+        <thead>
+        <tr>
+            <th></th>
+            <th colStyle="text-align: center" bindName="info.name" render="a" options="{'url':'#'}">姓名</th>
+            <th colStyle="text-align: center" bindName="chinese" sort="true">语文</th>
+            <th colStyle="text-align: center" bindName="english" sort="true">英语</th>
+            <th colStyle="text-align: center" bindName="politics" sort="true">政治</th>
+            <th colStyle="text-align: center" bindName="history" sort="true">历史</th>
+            <th colStyle="text-align: center" bindName="geography" sort="true">地理</th>
+            <th colStyle="text-align: center" bindName="math">数学</th>
+            <th colStyle="text-align: center" bindName="physics">物理</th>
+            <th colStyle="text-align: center" bindName="organisms">生物</th>
+            <th colStyle="text-align: center" bindName="chemistry">化学</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<script type="text/javascript">
+    function sort (bindName, sortType) {
+        data.sort(function (a, b) {
+            if (sortType === "ASC") {
+                return a[bindName] - b[bindName];
+            }
+            return b[bindName] - a[bindName];
+        })
+    }
+    function initData (gridObj, query) {
+        var pageNo = query.pageNo,
+            recordSize = query.recordSize,
+            sortName = query.sortName,
+            sortType = query.sortType,
+            i, len = sortName.length;
+        for(i = 0; i < len; i++) {
+            if (sortName[i]) {
+                sort(sortName[i], sortType[i]);
+            }
+        }
+        gridObj.setDatasource(data.slice(recordSize * (pageNo - 1), recordSize * pageNo), 1500);
+    }
+    function getSrotStatus () {
+        var query = gridObj.getQuery();
+        alert("排序列有：" + query.sortName + "\n" + "排序分别是：" + query.sortType);
+    }
+    gridObj = $("#grid").grid({
+        datasource: initData,
+        gridWidth: 800,
+        sortColSize: 3
+    });
+</script>
+</body>
+</html>
