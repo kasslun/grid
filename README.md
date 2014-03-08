@@ -3,7 +3,7 @@ grid——多功能数据表格
 ![预览](http://kasslun.github.io/grid/img/preview.png)
 说明
 ----
-暂时不提供API和开源，测试例子请访问http://kasslun.github.io/grid/demo/。   
+暂时不提供API和开源，测试例子请访问http://kasslun.github.io/grid/demo/    
 有疑问可以Email：kasslun@gmail.com
 依赖
 ----
