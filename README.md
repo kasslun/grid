@@ -5,7 +5,7 @@ grid——多功能数据表格
 ----
 你可以<a href="http://kasslun.github.io/grid/demo/" target="_blank">查看demo</a>    
 暂时不提供API和开源。   
-有疑问可以Email：kasslun@gmail.com
+有疑问可以Email：kasslun@qq.com
 依赖
 ----
 jQuery1.4以上版本。
